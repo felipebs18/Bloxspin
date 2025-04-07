@@ -1,103 +1,62 @@
 loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
-
-local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
-
-local Window = Rayfield:CreateWindow({
-    Name = "Lipi's Menu",
-    ConfigurationSaving = {
-        Enabled = false
-    }
-})
-
-local Tab = Window:CreateTab("ATM", 4483362458)
-
-local SliderMinigame = require(game.ReplicatedStorage.Modules.Game.Minigames.SliderMinigame)
-local active = false
-local conn
-
-Tab:CreateParagraph({
-    Title = "Auto ATM Hack",
-    Content = "Completes the minigame after 1.3 seconds"
-})
-
-Tab:CreateToggle({
-    Name = "Enable ATM Hack",
-    CurrentValue = false,
-    Callback = function(state)
-        active = state
-
-        if active then
-            SliderMinigame.enabled.hook(function(enabled)
-                if enabled then
-                    task.wait(1.3)
-                    SliderMinigame.win:Fire(true)
-                end
-            end)
-        end
-    end
-})
-
-local espEnabled = false
-local atmFolder = workspace:WaitForChild("Map"):WaitForChild("Props")
-local atmHighlights = {}
-
-Tab:CreateToggle({
-    Name = "ESP ATM",
-    CurrentValue = false,
-    Callback = function(state)
-        espEnabled = state
-
-        for _, v in ipairs(atmHighlights) do
-            v:Destroy()
-        end
-        table.clear(atmHighlights)
-
-        if espEnabled then
-            for _, v in ipairs(atmFolder:GetDescendants()) do
-                if v:IsA("Model") and v.Name:lower():find("atm") then
-                    local part = v.PrimaryPart or v:FindFirstChildWhichIsA("BasePart")
-                    if part then
-                        local highlight = Instance.new("Highlight")
-                        highlight.FillColor = Color3.fromRGB(150, 0, 255)
-                        highlight.FillTransparency = 0.7
-                        highlight.OutlineColor = Color3.fromRGB(200, 0, 255)
-                        highlight.OutlineTransparency = 0
-                        highlight.Adornee = v
-                        highlight.Parent = part
-                        table.insert(atmHighlights, highlight)
-                    end
-                end
-            end
-        end
-    end
-})
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local tpWalkEnabled = false
-
-Tab:CreateParagraph({
-    Title = "TP Walk [Press X to toggle]",
-    Content = ""
-})
-
-local UIS = game:GetService("UserInputService")
-UIS.InputBegan:Connect(function(input, gpe)
-    if gpe then return end
-    if input.KeyCode == Enum.KeyCode.X then
-        tpWalkEnabled = not tpWalkEnabled
-    end
+local a=loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+local b=a:CreateWindow({Name="Lipi's Menu",ConfigurationSaving={Enabled=false}})
+local c=b:CreateTab("ATM",4483362458)
+local d=require(game.ReplicatedStorage.Modules.Game.Minigames.SliderMinigame)
+local e=false
+local f
+c:CreateParagraph({Title="Auto ATM Hack",Content="Completes the minigame after 1.3 seconds"})
+c:CreateToggle({Name="Enable ATM Hack",CurrentValue=false,Callback=function(g)
+e=g
+if e then
+d.enabled.hook(function(h)
+if h then task.wait(1.3)d.win:Fire(true)end
 end)
-
+end
+end})
+local i=false
+local j=workspace:WaitForChild("Map"):WaitForChild("Props")
+local k={}
+c:CreateToggle({Name="ESP ATM",CurrentValue=false,Callback=function(l)
+i=l
+for m,n in ipairs(k)do n:Destroy()end
+table.clear(k)
+if i then
+for _,o in ipairs(j:GetDescendants())do
+if o:IsA("Model")and o.Name:lower():find("atm")then
+local p=o.PrimaryPart or o:FindFirstChildWhichIsA("BasePart")
+if p then
+local q=Instance.new("Highlight")
+q.FillColor=Color3.fromRGB(150,0,255)
+q.FillTransparency=0.7
+q.OutlineColor=Color3.fromRGB(200,0,255)
+q.OutlineTransparency=0
+q.Adornee=o
+q.Parent=p
+table.insert(k,q)
+end
+end
+end
+end
+end})
+local r=game:GetService("Players")
+local s=r.LocalPlayer
+local t=false
+c:CreateParagraph({Title="TP Walk [Press X to toggle]",Content=""})
+local u=game:GetService("UserInputService")
+u.InputBegan:Connect(function(v,w)
+if w then return end
+if v.KeyCode==Enum.KeyCode.X then t=not t end
+end)
 task.spawn(function()
-    while task.wait() do
-        if tpWalkEnabled then
-            local char = LocalPlayer.Character
-            local hrp = char and char:FindFirstChild("HumanoidRootPart")
-            local hum = char and char:FindFirstChildWhichIsA("Humanoid")
-            if hrp and hum and hum.MoveDirection.Magnitude > 0 then
-                hrp.CFrame = hrp.CFrame + (hum.MoveDirection.Unit * 1)
-            end
-        end
-    end
+while task.wait()do
+if t then
+local x=s.Character
+local y=x and x:FindFirstChild("HumanoidRootPart")
+local z=x and x:FindFirstChildWhichIsA("Humanoid")
+if y and z and z.MoveDirection.Magnitude>0 then
+y.CFrame=y.CFrame+(z.MoveDirection.Unit*1)
+end
+end
+end
 end)
