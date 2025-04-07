@@ -1,63 +1,81 @@
-loadstring(game:HttpGet(('https://sirius.menu/rayfield')))()
-local a=loadstring(game:HttpGet(('https://sirius.menu/rayfield')))()
-local b=a:CreateWindow({Name=('\76\105\112\105\39\115\32\77\101\110\117'),ConfigurationSaving={Enabled=false}})
-local c=b:CreateTab('\65\84\77',4483362458)
-local d=require(game.ReplicatedStorage:WaitForChild('\77\111\100\117\108\101\115'):WaitForChild('\71\97\109\101'):WaitForChild('\77\105\110\105\103\97\109\101\115'):WaitForChild('\83\108\105\100\101\114\77\105\110\105\103\97\109\101'))
-local e=false
-local f,_,__={}
-c:CreateParagraph({Title='\65\117\116\111\32\65\84\77\32\72\97\99\107',Content='\67\111\109\112\108\101\116\101\115\32\105\110\32\49\46\51\115'})
-c:CreateToggle({Name='\69\110\97\98\108\101\32\65\84\77\32\72\97\99\107',CurrentValue=false,Callback=function(g)
-e=g
-if e then
-d.enabled.hook(function(h)
-if h then task.wait(1.3)d.win:Fire(true)end
-end)
-end
-end})
+loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
-local i=false
-local j=workspace:WaitForChild('\77\97\112'):WaitForChild('\80\114\111\112\115')
-local k={}
-c:CreateToggle({Name='\69\83\80\32\65\84\77',CurrentValue=false,Callback=function(l)
-i=l
-for m,n in ipairs(k)do pcall(function()n:Destroy()end)end
-table.clear(k)
-if i then
-for _,o in ipairs(j:GetDescendants())do
-if o:IsA('\77\111\100\101\108')and o.Name:lower():find('\97\116\109')then
-local p=o.PrimaryPart or o:FindFirstChildWhichIsA('\66\97\115\101\80\97\114\116')
-if p then
-local q=Instance.new('\72\105\103\104\108\105\103\104\116')
-q.FillColor=Color3.fromRGB(150,0,255)
-q.FillTransparency=0.7
-q.OutlineColor=Color3.fromRGB(200,0,255)
-q.OutlineTransparency=0
-q.Adornee=o
-q.Parent=p
-table.insert(k,q)
-end
-end
-end
-end
-end})
+local a = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+local b = a:CreateWindow({Name = "Lipi's Menu", ConfigurationSaving = {Enabled = false}})
+local c = b:CreateTab("ATM", 4483362458)
+local d = require(game.ReplicatedStorage.Modules.Game.Minigames.SliderMinigame)
+local e, f, g, h = false, false, {}, game:GetService("Players").LocalPlayer
+local i = false
 
-local r=game:GetService('\80\108\97\121\101\114\115')
-local s=r.LocalPlayer
-local t=false
-c:CreateParagraph({Title='\84\80\32\87\97\108\107\32\91\80\114\101\115\115\32\88\32\116\111\32\116\111\103\103\108\101\93',Content=''})
-local u=game:GetService('\85\115\101\114\73\110\112\117\116\83\101\114\118\105\99\101')
-u.InputBegan:Connect(function(v,w)
-if not w and v.KeyCode==Enum.KeyCode.X then t=not t end
+c:CreateParagraph({Title = "Auto ATM Hack", Content = "Completes the minigame after 1.3 seconds"})
+
+c:CreateToggle({
+	Name = "Enable ATM Hack",
+	CurrentValue = false,
+	Callback = function(j)
+		e = j
+		if e then
+			d.enabled.hook(function(k)
+				if k then task.wait(1.3) d.win:Fire(true) end
+			end)
+		end
+	end
+})
+
+local l = workspace:WaitForChild("Map"):WaitForChild("Props")
+
+c:CreateToggle({
+	Name = "ESP ATM",
+	CurrentValue = false,
+	Callback = function(m)
+		f = m
+		for _, n in ipairs(g) do n:Destroy() end
+		table.clear(g)
+		if f then
+			for _, o in ipairs(l:GetDescendants()) do
+				if o:IsA("Model") and o.Name:lower():find("atm") then
+					local p = o.PrimaryPart or o:FindFirstChildWhichIsA("BasePart")
+					if p then
+						local q = Instance.new("Highlight")
+						q.FillColor = Color3.fromRGB(150, 0, 255)
+						q.FillTransparency = 0.7
+						q.OutlineColor = Color3.fromRGB(200, 0, 255)
+						q.OutlineTransparency = 0
+						q.Adornee = o
+						q.Parent = p
+						table.insert(g, q)
+					end
+				end
+			end
+		end
+	end
+})
+
+c:CreateParagraph({Title = "TP Walk [Press X to toggle]", Content = "Mobile users can use the button below"})
+
+c:CreateButton({
+	Name = "Toggle TP Walk (Mobile)",
+	Callback = function()
+		i = not i
+		a:Notify({Title = "TP Walk", Content = i and "Enabled" or "Disabled", Duration = 3})
+	end
+})
+
+game:GetService("UserInputService").InputBegan:Connect(function(r, s)
+	if not s and r.KeyCode == Enum.KeyCode.X then i = not i end
 end)
+
 task.spawn(function()
-while task.wait()do
-if t then
-local x=s.Character
-local y=x and x:FindFirstChild('\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116')
-local z=x and x:FindFirstChildWhichIsA('\72\117\109\97\110\111\105\100')
-if y and z and z.MoveDirection.Magnitude>0 then
-y.CFrame=y.CFrame+(z.MoveDirection.Unit*1)
-end
-end
-end
+	while task.wait() do
+		if i then
+			local t, u, v = h.Character, nil, nil
+			if t then
+				u = t:FindFirstChild("HumanoidRootPart")
+				v = t:FindFirstChildWhichIsA("Humanoid")
+			end
+			if u and v and v.MoveDirection.Magnitude > 0 then
+				u.CFrame = u.CFrame + (v.MoveDirection.Unit * 1)
+			end
+		end
+	end
 end)
