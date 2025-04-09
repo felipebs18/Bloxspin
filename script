@@ -50,10 +50,10 @@ z3:CreateToggle({
 						local b1 = require(game.ReplicatedStorage.Modules.Core.UI)
 						local b2 = b1.get("ATMHackButton", true)
 						if b2 and b2.Visible and b2:IsDescendantOf(z8.PlayerGui) then
-							task.wait(0.1)
+							task.wait(0.25)
 							firesignal(b2.MouseButton1Click)
 							a2 = false
-							task.delay(1, function() a2 = true end)
+							task.delay(2.5, function() a2 = true end)
 						end
 					end
 				end
